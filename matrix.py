@@ -34,3 +34,9 @@ for i in range(n):
        lst.append()
     matrix.append(lst[:])
     lst.clear()
+# ----------------------------------------------------------------------
+
+import numpy as np
+np.ones() # creat matrix only 1 
+np.random.normal() # сгенирировать случайную матрицу
+np.linalg.inv() # найти обратную матрицу

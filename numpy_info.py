@@ -16,3 +16,5 @@ print(data2)
 print(np.dot(vector1,vector2))
 # то же самое
 print(vector1 @ vector2)
+# создать вектор из нулей
+np.zeros(10)
