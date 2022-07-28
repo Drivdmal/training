@@ -55,3 +55,14 @@ my_time = time(11,20,54,1234) - часы-минуты-секунды-микро�
 %c	Дата и время	Tue Aug 16 21:30:00 1988 (en_US);  03.01.2019 23:18:32 (ru_RU)
 %x	Дата	08/16/88 (None); 08/16/1988 (en_US);  03.01.2019 (ru_RU)
 %X	Время	21:30:00
+
+Изоформат:
+print('Дата: ' + my_date.isoformat())
+или
+print('Дата: ' + str(my_date))
+
+Локализация (язык):
+import locale
+locale.setlocale(locale.LC_ALL, 'ru_RU.UTF-8')
+locale.setlocale(locale.LC_ALL, 'en_EN.UTF-8')
+https://docs-python.ru/standart-library/modul-locale-python/
