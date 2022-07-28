@@ -1,0 +1,77 @@
+import pandas as pd
+import numpy as np
+import re
+import nltk
+nltk.download(['averaged_perceptron_tagger'])
+from tqdm import notebook, tqdm
+from nltk.corpus import stopwords as nltk_stopwords
+from nltk.corpus import wordnet
+from nltk import pos_tag
+from nltk.stem import WordNetLemmatizer
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.model_selection import train_test_split
+from sklearn.dummy import DummyClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import f1_score, make_scorer
+from catboost import CatBoostClassifier
+from sklearn.preprocessing import StandardScaler
+# добавлено
+from sklearn.pipeline import Pipeline
+
+stopwords = set(nltk_stopwords.words('english'))
+
+x_train, x_test, y_train, y_test = train_test_split(df.corpus,
+                                                    df.toxic,
+                                                    test_size=0.2,
+                                                    random_state=12345)
+
+params = {
+    'classifier__C': [0.01, 0.1, 1, 10, 100],
+    'classifier__penalty': ["l1", "l2"],
+    'classifier__random_state': [12345],
+    'classifier__class_weight': ['balanced'],
+    'classifier__solver': ['liblinear'],
+}
+
+steps = [('tfidf', TfidfVectorizer(stop_words=stopwords)),
+         ('classifier', LogisticRegression())]
+
+pipe = Pipeline(steps)
+
+grid = GridSearchCV(pipe, params, cv=5, scoring=f1, verbose=3)
+
+grid.fit(x_train, y_train)
+
+print('Лучшие параметры ', grid.best_params_)
+print('Лучший результат ', grid.best_score_)
+
+print('f1 на тестовой выборке = ', f1_score(y_test, predict, average='binary'))
+
+x_train, x_test, y_train, y_test = train_test_split(df.corpus,
+                                                    df.toxic,
+                                                    test_size=0.2,
+                                                    random_state=12345)
+
+stopwords = set(nltk_stopwords.words('english'))
+
+count_tf_idf = TfidfVectorizer(stop_words=stopwords)
+
+x_train = count_tf_idf.fit_transform(x_train)
+
+x_test = count_tf_idf.transform(x_test)
+
+
+parameters = {}
+
+for key in grid.best_params_.keys():
+    parameters[key[12:]] = grid.best_params_[key]
+
+model = LogisticRegression(**parameters)
+
+model.fit(x_train, y_train)
+
+predict = model.predict(x_test)
+
+print('f1 на тестовой выборке = ', f1_score(y_test, predict, average='binary'))

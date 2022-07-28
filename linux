@@ -1,0 +1,2 @@
+sudo umount -l /dev/sdb3
+sudo mount -w /dev/sdb3 /home/drivdmal/d/

@@ -1,0 +1,9 @@
+# # библиотеки, которых нет на сервере
+# !pip install sweetviz -q
+# # Библиотека pandas-profiling не всегда устанавливается стабильно, поэтому принудительно задать стабильные версии
+# !pip install pandas_profiling==1.4.1 -q
+# !pip install pandas==0.25.3 -q
+# # # Обновить версию scikit-learn навсякий случай
+# # !pip install -U scikit-learn -q
+
+import pandas_profiling
